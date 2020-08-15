@@ -20,8 +20,8 @@ const Input = (props) => {
 
 export default Input;
 
-const styles = StyleSheet.create ({
-    TextInputStyle:{
+const styles = StyleSheet.create({
+    textInputStyle:{
         backgroundColor:"#d1cdcd"
     }
-})
+ })

@@ -1,32 +1,33 @@
-import React from "react";
-import { FlatList, Text, TouchableOpacity, StyleSheet, View } from "react-native";
-import { useShows } from "../../hooks/useShows";
+import React,{useContext} from "react";
+import { FlatList,Text,TouchableOpacity, StyleSheet,View } from "react-native";
+import {useShows} from "../../hooks/useShows";
+import { AppContext } from "../../context/AppContext";
 
 export const ShowList = () =>{
     const {shows} = useShows();
+    const {dispatch} = useContext(AppContext);
 
     return (
         <>
         <View style={styles.listStyle}>
         <FlatList
-            data={shows}
-            keyExtractor={(item)=>item.id}
-            renderItem={({item})=><TouchableOpacity
-                                    onPress={()=>console.info("Cliquei em "+item.id)}
-                                  >
-                                    <View style={styles.buttonStyle}>
-                                    <Text>{item.name}</Text>
-                                    </View>
-                                </TouchableOpacity>}
+          data={shows.sort((show1,show2)=>(""+show1.name).localeCompare(show2.name))}
+          keyExtractor={(item)=>item.id}
+          renderItem={({item})=><TouchableOpacity
+                            onPress={()=>dispatch({type:"setItemSelected",payload:item.id})}
+                          >
+                            <View style={styles.butttonStyle}>
+                            <Text>{item.name}</Text>
+                            </View>
+                         </TouchableOpacity>}
         />
         </View>
         </>
     )
-
 }
 
 const styles = StyleSheet.create({
-    buttonStyle:{
+    butttonStyle:{
         flexDirection:"row",
         justifyContent:"center",
         borderColor:"gray",
